@@ -1,5 +1,11 @@
+require("dotenv").config(); /** import the dotenv package and created a .env on root of project */
 const mongoose = require("mongoose");
-const dbURI = "mongodb+srv://admin:admin@cluster1.l3r7pjc.mongodb.net/"
+//const host = process.env.DB_HOST || "127.0.0.1";
+//console.log(process.env.DB_HOST);  /*** This value is undefined ***/
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+//const dbURI = `mongodb://${host}/travlr`; /** if host is undefined how is this working without a .env? */
+const dbURI = `mongodb+srv://${user}:${password}@cluster1.l3r7pjc.mongodb.net/`;
 const readLine = require("readline");
 
 // // avoid current server discovery and monitoring engine is depreciated
