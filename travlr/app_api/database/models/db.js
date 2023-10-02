@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
-const host = process.env.DB_HOST || "127.0.0.1";
-const dbURI = `mongodb://${host}/travlr`;
+const mongoose = require("mongoose");
+const dbURI = "mongodb+srv://admin:admin@cluster1.l3r7pjc.mongodb.net/"
 const readLine = require("readline");
 
-// avoid current server discovery and monitoring engine is depreciated
+// // avoid current server discovery and monitoring engine is depreciated
 mongoose.set("useUnifiedTopology", true);
 
 const connect = () => {
@@ -17,16 +16,17 @@ const connect = () => {
     );
 };
 
+
 mongoose.connection.on("connected", () => {
-    console.log('Mongoose connected to ${dbURI}');
+    console.log(`Mongoose connected to ${dbURI}`);
 });
 
 mongoose.connection.on("error", (err) => {
-    console.log('Mongoose connection error: ', err);
+    console.log(`Mongoose connection error: `, err);
 });
 
 mongoose.connection.on("disconnected", () => {
-    console.log('Mongoose disconnected');
+    console.log(`Mongoose disconnected`);
 });
 
 if (process.platform == "win32") {
@@ -41,7 +41,7 @@ if (process.platform == "win32") {
 
 const gracefulShutdown = (msg, callback) => {
     mongoose.connection.close(() => {
-        console.log('Mongoose disconnected through ${msg}');
+        console.log(`Mongoose disconnected through ${msg}`);
         callback();
     });
 };
@@ -70,4 +70,4 @@ process.on("SIGTERM", () => {
 connect();
 
 // bring in schema
-require("./models/travlr");
+require("./travlr");
