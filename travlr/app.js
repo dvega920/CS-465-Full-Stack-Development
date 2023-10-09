@@ -4,10 +4,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const hbs = require("hbs");
-require("./app_api/database/models/db.js");
+require("./app_api/database/db.js");
 
 var indexRouter = require("./app_server/routes/index");
-var usersRouter = require("./app_server/routes/users");
 var travelRouter = require("./app_server/routes/travel");
 var roomsRouter = require("./app_server/routes/rooms");
 var newsRouter = require("./app_server/routes/news");
@@ -33,7 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Allow CORS
 app.use("/api", (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -43,7 +42,6 @@ app.use("/api", (req, res, next) => {
 });
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/travel", travelRouter);
 app.use("/rooms", roomsRouter);
 app.use("/news", newsRouter);
