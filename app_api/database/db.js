@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const host = process.env.DB_HOST || "127.0.0.1";
-const dbURI = `mongodb://${host}/test`;
+const dbURI = `mongodb://${host}/travlr`;
 const readLine = require("readline");
 
 // avoid current server discovery and monitoring engine is depreciated
-// mongoose.set("useUnifiedTopology", true);
+mongoose.set("useUnifiedTopology", true);
 
 const connect = () => {
     setTimeout(
@@ -12,7 +12,6 @@ const connect = () => {
             mongoose.connect(dbURI, {
                 useNewUrlParser: true,
                 useCreateIndex: true,
-                useUnifiedTopology: true
             }),
         1000
     );
@@ -71,4 +70,4 @@ process.on("SIGTERM", () => {
 connect();
 
 // bring in schema
-require("./travlr");
+require("./models/travlr");

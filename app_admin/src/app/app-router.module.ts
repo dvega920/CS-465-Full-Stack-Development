@@ -5,10 +5,10 @@ import { AddTripComponent } from "./add-trip/add-trip.component";
 import { EditTripComponent } from "./edit-trip/edit-trip.component";
 
 const routes: Routes = [
-    { path: 'add-trip', component: AddTripComponent },
-    { path: 'edit-trip', component: EditTripComponent },
-    { path: '', component: TripListingComponent, pathMatch: 'full' }
-]
+    { path: "add-trip", component: AddTripComponent },
+    { path: "edit-trip", component: EditTripComponent },
+    { path: "", component: TripListingComponent, pathMatch: "full" },
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

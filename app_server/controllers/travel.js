@@ -1,18 +1,21 @@
+// const fs = require("fs");
+// const trips = JSON.parse(fs.readFileSync("data/trips.json", 'utf-8'));
+
 const request = require("request");
+const { response } = require("../../app");
+
 const apiOptions = {
     server: "http://localhost:3000",
 };
 
-const travel = (req, res) => {
-    res.render("travel", { title: "Travlr Getaways" });
-};
-module.exports = {
-    travel
-};
+// const travel = (rec, res, responseBody) => {
+//     pageTitle = process.env.npm_package_description + " - Travel";
+//     res.render("travel", { title: pageTitle, trips: responseBody });
+// }
 
 const renderTravelList = (rec, res, responseBody) => {
     let message = null;
-    let pageTitle = process.env.npm_package_description + " Travel";
+    let pageTitle = process.env.npm_package_description + " - Travel";
 
     if (!(responseBody instanceof Array)) {
         message = "API lookup error";
@@ -38,7 +41,7 @@ const travelList = (req, res) => {
         json: {},
     };
 
-    console.info(" >> travelcontroller.travelList calling " + requestOptions.url);
+    console.info(" >> travelcontroller.travelList calling" + requestOptions.url);
     request(requestOptions, (err, { statusCode }, body) => {
         if (err) {
             console.error(err);
@@ -47,6 +50,6 @@ const travelList = (req, res) => {
     });
 };
 
-// module.exports = {
-//     travelList,
-// };
+module.exports = {
+    travelList
+};

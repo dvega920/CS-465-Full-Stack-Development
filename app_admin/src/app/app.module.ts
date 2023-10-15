@@ -19,15 +19,8 @@ import { EditTripComponent } from './edit-trip/edit-trip.component';
     AddTripComponent,
     EditTripComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    ReactiveFormsModule,
-    AppRoutingModule
-  ],
-  providers: [
-    TripDataService]
-  ,
+  imports: [BrowserModule, HttpModule, ReactiveFormsModule, AppRoutingModule],
+  providers: [TripDataService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
