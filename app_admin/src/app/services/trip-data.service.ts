@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { trips } from '../data/trips';
+// import { trips } from '../data/trips';
 import { Trip } from "../models/trip";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class TripDataService {
   public getTrips(): Promise<Trip[]> {
     console.log("Inside TripDataService#getTrips");
     return this.http
-      .get(`${this.apiBaseUrl}trips`)
+      .get(this.tripUrl)
       .toPromise()
       .then((response) => response.json() as Trip[])
       .catch(this.handleError);
@@ -24,7 +24,7 @@ export class TripDataService {
     return this.http
       .get(this.tripUrl + tripCode)
       .toPromise()
-      .then((response) => response.json() as Trip[])
+      .then((response) => response.json() as Trip)
       .catch(this.handleError);
   }
 
@@ -37,7 +37,7 @@ export class TripDataService {
       .catch(this.handleError);
   }
 
-  public updateTrip(formData: Trip): Promise<Trip[]> {
+  public updateTrip(formData: Trip): Promise<Trip> {
     console.log("Inside TripDataService#updateTrip");
     console.log(formData);
     return this.http

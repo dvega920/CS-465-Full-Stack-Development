@@ -2,16 +2,11 @@
 // const trips = JSON.parse(fs.readFileSync("data/trips.json", 'utf-8'));
 
 const request = require("request");
-const { response } = require("../../app");
 
 const apiOptions = {
     server: "http://localhost:3000",
 };
 
-// const travel = (rec, res, responseBody) => {
-//     pageTitle = process.env.npm_package_description + " - Travel";
-//     res.render("travel", { title: pageTitle, trips: responseBody });
-// }
 
 const renderTravelList = (rec, res, responseBody) => {
     let message = null;
