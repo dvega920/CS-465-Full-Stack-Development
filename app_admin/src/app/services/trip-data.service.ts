@@ -26,7 +26,7 @@ export class TripDataService {
   }
 
   public getTrip(tripCode: string): Promise<Trip> {
-    console.log("Inside TripDataService#getdTrip");
+    console.log("Inside TripDataService#getTrip");
     return this.http
       .get(this.tripUrl + tripCode)
       .toPromise()
