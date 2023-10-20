@@ -1,11 +1,17 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-// import { trips } from '../data/trips';
+import { Injectable, Inject } from "@angular/core";
+import { Http, Headers } from "@angular/http";
+
 import { Trip } from "../models/trip";
+import { BROWSER_STORAGE } from "../storage";
+import { User } from "../models/user";
+import { Authresponse } from "../models/authresponse";
 
 @Injectable()
 export class TripDataService {
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    @Inject(BROWSER_STORAGE) private storage: Storage
+  ) { }
 
   private apiBaseUrl = "http://localhost:3000/api/";
   private tripUrl = `${this.apiBaseUrl}trips/`;
@@ -13,14 +19,14 @@ export class TripDataService {
   public getTrips(): Promise<Trip[]> {
     console.log("Inside TripDataService#getTrips");
     return this.http
-      .get(this.tripUrl)
+      .get(`${this.apiBaseUrl}trips`)
       .toPromise()
       .then((response) => response.json() as Trip[])
       .catch(this.handleError);
   }
 
-  public getTrip(tripCode: string): Promise<Trip[]> {
-    console.log("Inside TripDataService#getTrip(tripCode)");
+  public getTrip(tripCode: string): Promise<Trip> {
+    console.log("Inside TripDataService#getdTrip");
     return this.http
       .get(this.tripUrl + tripCode)
       .toPromise()
@@ -29,9 +35,13 @@ export class TripDataService {
   }
 
   public addTrip(formData: Trip): Promise<Trip> {
-    console.log("Insided TripDataService#addTrip");
+    console.log("Inside TripDataService#addTrip");
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("travlr-token")}`,
+    });
     return this.http
-      .post(this.tripUrl, formData)
+      .post(this.tripUrl, formData, { headers: headers })
       .toPromise()
       .then((response) => response.json() as Trip[])
       .catch(this.handleError);
@@ -39,16 +49,36 @@ export class TripDataService {
 
   public updateTrip(formData: Trip): Promise<Trip> {
     console.log("Inside TripDataService#updateTrip");
-    console.log(formData);
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("travlr-token")}`,
+    });
     return this.http
-      .put(this.tripUrl + formData.code, formData)
+      .put(this.tripUrl + formData.code, formData, { headers: headers })
       .toPromise()
       .then((response) => response.json() as Trip[])
       .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
-    console.error("Something has gone wrong", error);
+    console.error("Something has gone wrong", error); // for demo purposes only
     return Promise.reject(error.message || error);
+  }
+
+  public login(user: User): Promise<Authresponse> {
+    return this.makeAuthApiCall("login", user);
+  }
+
+  public register(user: User): Promise<Authresponse> {
+    return this.makeAuthApiCall("register", user);
+  }
+
+  private makeAuthApiCall(urlPath: string, user: User): Promise<Authresponse> {
+    const url: string = `${this.apiBaseUrl}/${urlPath}`;
+    return this.http
+      .post(url, user)
+      .toPromise()
+      .then((response) => response.json() as Authresponse)
+      .catch(this.handleError);
   }
 }
